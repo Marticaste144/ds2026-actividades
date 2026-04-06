@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+p {
+    color: #333;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #2980b9;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+ul, ol {
+    margin-left: 20px;
+}
+
+img {
+    width: 150px;
+    margin-top: 10px;
+}
+.destacado {
+    color: #e74c3c;
+    font-weight: bold;
+}
