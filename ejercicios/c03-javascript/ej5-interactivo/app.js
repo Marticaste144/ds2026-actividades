@@ -5,7 +5,6 @@ function generar() {
 
     let n = Number(input);
 
-    // VALIDACIÓN
     if (input === "" || n < 1) {
         resultado.innerText = "Error: ingresar un número mayor a 0";
         return;
@@ -13,7 +12,6 @@ function generar() {
 
     let salida = "";
 
-    // GENERAR MEDIO ÁRBOL
     for (let i = 1; i <= n; i++) {
 
         for (let j = 1; j <= i; j++) {
