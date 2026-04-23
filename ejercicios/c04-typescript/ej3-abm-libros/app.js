@@ -1,0 +1,72 @@
+"use strict";
+let catalogo = [
+    { isbn: "1", titulo: "Libro A", autor: "Juan", precio: 1000, disponible: true },
+    { isbn: "2", titulo: "Libro B", autor: "Ana", precio: 2000, disponible: false }
+];
+const inputTitulo = document.getElementById("titulo");
+const inputAutor = document.getElementById("autor");
+const inputPrecio = document.getElementById("precio");
+const inputDisponible = document.getElementById("disponible");
+const btnAgregar = document.getElementById("agregar");
+const listado = document.getElementById("listado");
+const errorForm = document.getElementById("errorForm");
+function renderizar() {
+    if (!listado)
+        return;
+    listado.innerHTML = "";
+    catalogo.forEach(libro => {
+        const li = document.createElement("li");
+        li.textContent = `${libro.titulo} - ${libro.autor} - $${libro.precio}`;
+        const btnEliminar = document.createElement("button");
+        btnEliminar.textContent = "Eliminar";
+        btnEliminar.addEventListener("click", () => {
+            eliminarLibro(libro.isbn);
+        });
+        li.appendChild(btnEliminar);
+        listado.appendChild(li);
+    });
+}
+function agregarLibro(libro) {
+    catalogo.push(libro);
+    renderizar();
+}
+function eliminarLibro(isbn) {
+    catalogo = catalogo.filter(l => l.isbn !== isbn);
+    renderizar();
+}
+function validarFormulario() {
+    if (!inputTitulo || !inputAutor || !inputPrecio || !inputDisponible || !errorForm)
+        return null;
+    errorForm.textContent = "";
+    if (inputTitulo.value === "" || inputAutor.value === "" || inputPrecio.value === "") {
+        errorForm.textContent = "Todos los campos son obligatorios";
+        return null;
+    }
+    const precio = Number(inputPrecio.value);
+    if (precio <= 0) {
+        errorForm.textContent = "El precio debe ser mayor a 0";
+        return null;
+    }
+    const nuevoLibro = {
+        isbn: "AUTO-" + Date.now(),
+        titulo: inputTitulo.value,
+        autor: inputAutor.value,
+        precio: precio,
+        disponible: inputDisponible.checked
+    };
+    return nuevoLibro;
+}
+if (btnAgregar) {
+    btnAgregar.addEventListener("click", () => {
+        const libro = validarFormulario();
+        if (libro) {
+            agregarLibro(libro);
+            if (inputTitulo && inputAutor && inputPrecio) {
+                inputTitulo.value = "";
+                inputAutor.value = "";
+                inputPrecio.value = "";
+            }
+        }
+    });
+}
+renderizar();
