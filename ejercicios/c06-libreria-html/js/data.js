@@ -14,13 +14,17 @@ async function buscarLibros() {
   let html = "";
 
   libros.forEach(libro => {
+    const cover = libro.cover_i 
+      ? `https://covers.openlibrary.org/b/id/${libro.cover_i}-M.jpg`
+      : "https://via.placeholder.com/150";
+
     html += `
       <div class="col-md-3 mb-4">
         <div class="card">
-          <div class="card-body">
-            <h5>${libro.title}</h5>
+          <img src="${cover}" class="card-img-top">
+          <div class="card-body text-center">
+            <h6>${libro.title}</h6>
             <p>${libro.author_name ? libro.author_name[0] : "Sin autor"}</p>
-            <p>${libro.first_publish_year || "Sin año"}</p>
           </div>
         </div>
       </div>
