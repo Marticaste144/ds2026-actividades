@@ -1,0 +1,59 @@
+export type Libro = {
+  id: number;
+  titulo: string;
+  autor: string;
+  imagen: string;
+  descripcion: string;
+  precio: string;
+};
+
+export const libros: Libro[] = [
+  {
+    id: 1,
+    titulo: "Nos conocimos en el mar",
+    autor: "Jenny Han",
+    imagen: "https://marketplace.canva.com/EAFKQkM-QPw/1/0/1003w/canva-portada-de-libro-o-ebook-novela-de-amor-fotograf%C3%ADa-color-rosa-A1D_Pq8DFoI.jpg",
+    descripcion: "Una novela romántica llena de emociones y momentos inolvidables junto al mar.",
+    precio: "$4500"
+  },
+  {
+    id: 2,
+    titulo: "No tengas miedo",
+    autor: "Stephen King",
+    imagen: "https://images.cdn2.buscalibre.com/fit-in/360x360/76/28/76285bb379bca6410f16c52510b13944.jpg",
+    descripcion: "Un libro de terror lleno de misterio y tensión que te mantiene atrapado desde la primera página. Ideal para los amantes del suspenso.",
+    precio: "$5000"
+  },
+  {
+    id: 3,
+    titulo: "Lo que esconde el bosque",
+    autor: "Mercedes Ron",
+    imagen: "https://marketplace.canva.com/EAFpYu-k3tQ/2/0/1003w/canva-tapa-de-libro-de-terror-tipogr%C3%A1fico-blanco-y-negro-Lq-PT-PGQS8.jpg",
+    descripcion: "Una historia oscura llena de secretos, suspenso y misterio.",
+    precio: "$5200"
+  },
+  {
+    id: 4,
+    titulo: "La daga sin nombre",
+    autor: "Mercedes Ron",
+    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbRqxxfgEJj5EFeo65HrfvL4Y3ckP8BlAjHw&s",
+    descripcion: "Una aventura de fantasía llena de magia y peligros.",
+    precio: "$6000"
+  },
+  {
+    id: 5,
+    titulo: "Reyes caidos",
+    autor: "Pablo Cesar",
+    imagen: "https://marketplace.canva.com/EAFjNCKkDPI/2/0/1003w/canva-portada-de-libro-de-fantas%C3%ADa-dram%C3%A1tico-verde-vrb3LHyOaXg.jpg",
+    descripcion: "Una historia épica de reinos, traiciones y batallas.",
+    precio: "$7000"
+  },
+  {
+    id: 6,
+    titulo: "Cruce de camino",
+    autor: "Victoria",
+    imagen: "https://marketplace.canva.com/EAFutLMZJKs/1/0/1003w/canva-portada-libro-novela-suspenso-elegante-negro-wxuYB_sJtMw.jpg",
+    descripcion: "Una novela de suspenso con decisiones que cambian destinos.",
+    precio: "$4800"
+  }
+];
