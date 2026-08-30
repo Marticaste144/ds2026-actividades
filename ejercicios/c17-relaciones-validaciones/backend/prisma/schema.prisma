@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Autor {
+  id           Int     @id @default(autoincrement())
+  nombre       String  @unique
+  nacionalidad String
+
+  // 1:N - Un autor puede tener muchos libros
+  libros       Libro[]
+}
+
+model Libro {
+  id         Int     @id @default(autoincrement())
+  titulo     String
+  precio     Int
+  imagen     String
+  disponible Boolean @default(true)
+
+  // N:1 - Cada libro pertenece a un autor
+  autorId    Int
+  autor      Autor   @relation(fields: [autorId], references: [id], onDelete: Restrict)
+
+  // N:M implícita - Un libro puede pertenecer a varias categorías
+  categorias Categoria[]
+}
+
+model Categoria {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique
+
+  // N:M implícita - Una categoría puede contener varios libros
+  libros Libro[]
+}
