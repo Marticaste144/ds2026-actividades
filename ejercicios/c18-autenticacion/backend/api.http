@@ -1,0 +1,103 @@
+### =========================================
+### C17 - Relaciones y validaciones - Librería
+### =========================================
+
+### Listar libros - OK
+GET http://localhost:3000/api/libros
+
+###
+
+### Obtener libro existente - OK
+GET http://localhost:3000/api/libros/1
+
+###
+
+### Listar autores - OK
+GET http://localhost:3000/api/autores
+
+###
+
+### Obtener autor existente - OK
+GET http://localhost:3000/api/autores/1
+
+
+### =========================================
+### CREAR LIBRO
+### =========================================
+
+### Crear libro válido - 201
+POST http://localhost:3000/api/libros
+Content-Type: application/json
+
+{
+  "titulo": "Nuevo libro",
+  "precio": 20000,
+  "imagen": "",
+  "disponible": true,
+  "autorId": 1,
+  "categoriaIds": [1]
+}
+
+
+### =========================================
+### ERROR 400 - VALIDACIÓN
+### =========================================
+
+### Precio inválido - 400
+POST http://localhost:3000/api/libros
+Content-Type: application/json
+
+{
+  "titulo": "",
+  "precio": -100,
+  "imagen": "",
+  "autorId": 1
+}
+
+###
+
+### ID inválido - 400
+GET http://localhost:3000/api/libros/abc
+
+
+### =========================================
+### ERROR 404 - NO ENCONTRADO
+### =========================================
+
+### Libro inexistente - 404
+GET http://localhost:3000/api/libros/999999
+
+###
+
+### Actualizar libro inexistente - 404
+PUT http://localhost:3000/api/libros/999999
+Content-Type: application/json
+
+{
+  "titulo": "Libro inexistente"
+}
+
+
+### =========================================
+### ERROR 409 - CONFLICTO
+### =========================================
+
+### Crear autor
+POST http://localhost:3000/api/autores
+Content-Type: application/json
+
+{
+  "nombre": "Autor Duplicado",
+  "nacionalidad": "Argentina"
+}
+
+###
+
+### Repetir exactamente el mismo autor - 409 P2002
+POST http://localhost:3000/api/autores
+Content-Type: application/json
+
+{
+  "nombre": "Autor Duplicado",
+  "nacionalidad": "Argentina"
+}
