@@ -1,0 +1,196 @@
+### =========================================
+### C18 - Autenticación y autorización
+### Librería
+### =========================================
+
+@baseUrl = http://localhost:3000/api
+
+
+### =========================================
+### 1. REGISTRO CORRECTO - 201
+### No debe devolver passwordHash
+### =========================================
+
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Usuario C18",
+  "email": "usuario.c18@test.com",
+  "password": "Usuario123"
+}
+
+
+### =========================================
+### 2. EMAIL DUPLICADO - 409
+### Ejecutar después de la prueba 1
+### =========================================
+
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Usuario C18",
+  "email": "usuario.c18@test.com",
+  "password": "Usuario123"
+}
+
+
+### =========================================
+### 3. PASSWORD INVÁLIDA - 400
+### Debe informar:
+### - mínimo 8 caracteres
+### - una mayúscula
+### - un número
+### =========================================
+
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Usuario inválido",
+  "email": "invalido@test.com",
+  "password": "corta"
+}
+
+
+### =========================================
+### 4. LOGIN - EMAIL INEXISTENTE - 401
+### =========================================
+
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "noexiste@test.com",
+  "password": "Usuario123"
+}
+
+
+### =========================================
+### 5. LOGIN - PASSWORD INCORRECTA - 401
+### =========================================
+
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "cliente@libreria.test",
+  "password": "PasswordIncorrecta123"
+}
+
+
+### =========================================
+### 6. LOGIN CORRECTO CLIENTE - 200
+### Guardamos automáticamente el token
+### =========================================
+
+# @name loginCliente
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "cliente@libreria.test",
+  "password": "Cliente1234"
+}
+
+###
+
+@tokenCliente = {{loginCliente.response.body.token}}
+
+
+### =========================================
+### LOGIN ADMIN
+### Auxiliar para las pruebas posteriores
+### =========================================
+
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@libreria.test",
+  "password": "Admin1234"
+}
+
+###
+
+@tokenAdmin = {{loginAdmin.response.body.token}}
+
+
+### =========================================
+### 7. /YO SIN TOKEN - 401
+### =========================================
+
+GET {{baseUrl}}/auth/yo
+
+
+### =========================================
+### 8. /YO CON TOKEN CLIENTE - 200
+### Debe devolver datos del usuario
+### y NO passwordHash
+### =========================================
+
+GET {{baseUrl}}/auth/yo
+Authorization: Bearer {{tokenCliente}}
+
+
+### =========================================
+### 9. CREAR LIBRO SIN TOKEN - 401
+### =========================================
+
+POST {{baseUrl}}/libros
+Content-Type: application/json
+
+{
+  "titulo": "Libro sin autenticación",
+  "precio": 20000,
+  "imagen": "",
+  "disponible": true,
+  "autorId": 9,
+  "categoriaIds": [9]
+}
+
+
+### =========================================
+### 10. CLIENTE INTENTA CREAR LIBRO - 403
+### =========================================
+
+POST {{baseUrl}}/libros
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{
+  "titulo": "Libro creado por cliente",
+  "precio": 20000,
+  "imagen": "",
+  "disponible": true,
+  "autorId": 9,
+  "categoriaIds": [9]
+}
+
+
+### =========================================
+### 11. ADMIN CREA LIBRO - 201
+### =========================================
+
+POST {{baseUrl}}/libros
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "titulo": "Libro ADMIN C18",
+  "precio": 25000,
+  "imagen": "",
+  "disponible": true,
+  "autorId": 9,
+  "categoriaIds": [9]
+}
+
+
+### =========================================
+### 12. LISTAR LIBROS SIN TOKEN - 200
+### Lectura pública
+### =========================================
+
+GET {{baseUrl}}/libros
